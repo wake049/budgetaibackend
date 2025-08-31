@@ -7,6 +7,7 @@ from alembic import context
 
 from dotenv import load_dotenv
 import os
+from urllib.parse import quote_plus
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -14,7 +15,20 @@ config = context.config
 
 
 load_dotenv()
-config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+def build_db_url():
+    url = os.getenv("DATABASE_URL") or os.getenv("DB_URL")
+    if url:
+        return url
+    user = os.getenv("DB_USER")
+    pwd  = os.getenv("DB_PASSWORD")
+    host = os.getenv("DB_HOST")
+    port = os.getenv("DB_PORT", "5432")
+    name = os.getenv("DB_NAME")
+    if not all([user, pwd, host, name]):
+        return None
+    return f"postgresql+psycopg2://{user}:{quote_plus(pwd)}@{host}:{port}/{name}"
+
+DATABASE_URL = build_db_url()
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
