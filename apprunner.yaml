@@ -1,0 +1,25 @@
+version: 1.0
+runtime: python3
+build:
+  commands:
+    build:
+      - echo "Starting build process..."
+      - python --version
+      - pip --version
+      - echo "Upgrading pip..."
+      - pip install --upgrade pip setuptools wheel
+      - echo "Installing system dependencies..."
+      - apt-get update && apt-get install -y gcc g++ libpq-dev
+      - echo "Installing Python dependencies..."
+      - pip install --no-cache-dir -r requirements.txt
+      - echo "Build completed successfully"
+run:
+  runtime-version: 3.11
+  command: uvicorn main:app --host 0.0.0.0 --port 8000
+  network:
+    port: 8000
+  env:
+    - name: PORT
+      value: "8000"
+    - name: PYTHONPATH
+      value: "/opt/app"

@@ -17,4 +17,5 @@ def build_db_url():
 
     return f"postgresql+psycopg2://{user}:{quote_plus(pwd)}@{host}:{port}/{name}"
 
+print("Using DB URL:", build_db_url())
 DATABASE_URL = build_db_url()
