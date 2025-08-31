@@ -145,7 +145,7 @@ def train_q_table():
                 action = np.argmax(q_table[state])
 
             next_state = get_next_state(state, action)
-            reward = get_reward(state, next_state, action)
+            reward = get_reward(state, next_state, action, target_savings=3000)
 
             old_q = q_table[state][action]
             next_max = max(q_table[next_state])
