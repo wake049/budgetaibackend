@@ -14,7 +14,22 @@ config = context.config
 
 
 load_dotenv()
-config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+config = context.config
+if config.config_file_name:
+    fileConfig(config.config_file_name)
+
+db_url = os.getenv("DATABASE_URL") or os.getenv("DB_URL")
+if not db_url:
+    # fall back to parts if DATABASE_URL not set
+    from urllib.parse import quote_plus
+    user = os.getenv("DB_USER", "")
+    pwd  = quote_plus(os.getenv("DB_PASSWORD", ""))
+    host = os.getenv("DB_HOST", "localhost")
+    port = os.getenv("DB_PORT", "5432")
+    name = os.getenv("DB_NAME", "")
+    db_url = f"postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{name}"
+
+config.set_main_option("sqlalchemy.url", db_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
