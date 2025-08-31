@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    image: backendbudgetai
+    ports:
+      - "8000:8000"
+    environment:
+      # Add sslmode=require if your RDS is configured for SSL (usually yes)
+      DATABASE_URL: postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require
+      ENV: dev
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      CORS_ALLOWED_ORIGINS: http://localhost:19006,http://localhost:5173

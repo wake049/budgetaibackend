@@ -1,0 +1,44 @@
+# Python cache / bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.pickle
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+.env.*    # e.g. .env.local, .env.dev
+
+# IDE / editor stuff
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Alembic migrations cache
+alembic/versions/*.pyc
+
+# Uploaded files
+uploads/
+media/
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Build / dist
+build/
+dist/
+*.egg-info/
